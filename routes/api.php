@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\FacebookController;
+use App\Http\Controllers\PaymentController;
 use Laravel\Socialite\Facades\Socialite;
 
 /*
@@ -23,6 +24,7 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::post('/orders', [OrderController::class, 'create']);
 Route::get('/orders/{id}', [OrderController::class, 'show']);
+Route::post('/payment-intent', [PaymentController::class, 'createPaymentIntent']);
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('auth/redirect/google', [GoogleController::class, 'redirectToGoogle']);

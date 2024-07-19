@@ -4,21 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Stripe\Stripe;
-use Stripe\Charge;
+use Stripe\PaymentIntent;
 
 class PaymentController extends Controller
 {
-    public function processPayment(Request $request)
+    public function createPaymentIntent(Request $request)
     {
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        $charge = Charge::create([
+        $paymentIntent = PaymentIntent::create([
             'amount' => $request->amount,
             'currency' => 'usd',
-            'source' => $request->token,
-            'description' => 'Order Payment',
+            'payment_method_types' => ['card'],
         ]);
 
-        return response()->json(['status' => 'Payment Successful']);
+        return response()->json([
+            'clientSecret' => $paymentIntent->client_secret,
+        ]);
     }
 }
