@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Auth\FacebookController;
 use Laravel\Socialite\Facades\Socialite;
 
 /*
@@ -26,6 +27,8 @@ Route::get('/orders/{id}', [OrderController::class, 'show']);
 Route::group(['middleware' => ['web']], function () {
     Route::get('auth/redirect/google', [GoogleController::class, 'redirectToGoogle']);
     Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+    Route::get('auth/redirect/facebook', [FacebookController::class, 'redirectToFacebook']);
+    Route::get('auth/facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
 });
 
 
