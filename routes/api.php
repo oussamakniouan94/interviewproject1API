@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Auth\GoogleController;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,10 @@ Route::get('/orders/{id}', [OrderController::class, 'show']);
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('auth/redirect/google', [GoogleController::class, 'redirectToGoogle']);
-    Route::get('auth/callback/google', [GoogleController::class, 'handleGoogleCallback']);
+    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 });
+
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
