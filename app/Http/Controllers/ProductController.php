@@ -111,4 +111,26 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->query('query');
+        $products = Product::where('name', 'LIKE', "%{$query}%")
+            ->orWhere('description', 'LIKE', "%{$query}%")
+            ->orWhere('category', 'LIKE', "%{$query}%")
+            ->get();
+
+        if ($products->isEmpty()) {
+            $terms = explode(' ', $query);
+            $products = Product::where(function ($q) use ($terms) {
+                foreach ($terms as $term) {
+                    $q->orWhere('name', 'LIKE', "%{$term}%")
+                        ->orWhere('description', 'LIKE', "%{$term}%")
+                        ->orWhere('category', 'LIKE', "%{$term}%");
+                }
+            })->get();
+        }
+
+        return response()->json($products);
+    }
 }

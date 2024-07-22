@@ -22,6 +22,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::get('/search', [ProductController::class, 'search']);
 Route::post('/orders', [OrderController::class, 'create']);
 Route::get('/orders/{id}', [OrderController::class, 'show']);
 Route::post('/payment-intent', [PaymentController::class, 'createPaymentIntent']);
